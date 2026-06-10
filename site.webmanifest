@@ -1,0 +1,16 @@
+{
+  "name": "刷子游戏分享",
+  "short_name": "刷子分享",
+  "description": "刷刷刷游戏推荐库",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f8fb",
+  "theme_color": "#0f6f75",
+  "icons": [
+    {
+      "src": "assets/covers/community-cache.png",
+      "sizes": "640x400",
+      "type": "image/png"
+    }
+  ]
+}

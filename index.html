@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>刷子游戏分享 | 刷刷刷游戏推荐库</title>
+    <meta
+      name="description"
+      content="刷子游戏分享是一个聚合高重复可玩、装备养成、赛季循环和资源收集游戏的中文推荐站。"
+    >
+    <meta name="theme-color" content="#0f6f75">
+    <meta property="og:title" content="刷子游戏分享">
+    <meta property="og:description" content="筛选、收藏、投稿你正在刷的游戏。">
+    <meta property="og:type" content="website">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#games" aria-label="刷子游戏分享首页">
+        <span class="brand-mark" aria-hidden="true">刷</span>
+        <span>
+          <strong>刷子游戏分享</strong>
+          <small>Loot & Grind Picks</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="#games">游戏库</a>
+        <a href="#ranking">榜单</a>
+        <a href="#submit">投稿</a>
+      </nav>
+      <button class="icon-button" id="shareSite" type="button" aria-label="分享本站">
+        <span aria-hidden="true">↗</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="library-layout" id="games" aria-labelledby="libraryTitle">
+        <aside class="filter-panel" aria-label="游戏筛选">
+          <div class="filter-heading">
+            <p class="eyebrow">Game Library</p>
+            <h1 id="libraryTitle">刷子游戏推荐库</h1>
+          </div>
+
+          <label class="search-box" for="searchInput">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="搜索游戏、标签、循环" autocomplete="off">
+          </label>
+
+          <div class="filter-group">
+            <h2>类型</h2>
+            <div class="segmented" id="genreFilters" role="group" aria-label="按类型筛选">
+              <button class="active" type="button" data-genre="all">全部</button>
+              <button type="button" data-genre="arpg">ARPG</button>
+              <button type="button" data-genre="shooter">射击</button>
+              <button type="button" data-genre="survival">生存</button>
+              <button type="button" data-genre="roguelite">肉鸽</button>
+              <button type="button" data-genre="sim">经营</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h2>平台</h2>
+            <div class="check-list" id="platformFilters">
+              <label><input type="checkbox" value="PC" checked> PC</label>
+              <label><input type="checkbox" value="主机" checked> 主机</label>
+              <label><input type="checkbox" value="移动端" checked> 移动端</label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label class="select-label" for="sessionSelect">单次游玩</label>
+            <select id="sessionSelect">
+              <option value="all">不限时长</option>
+              <option value="短局">短局</option>
+              <option value="中等">中等</option>
+              <option value="长线">长线</option>
+            </select>
+          </div>
+        </aside>
+
+        <div class="library-content">
+          <div class="content-bar">
+            <div>
+              <p class="eyebrow">Curated Grind</p>
+              <h2>按掉落、循环、成长深度挑选</h2>
+            </div>
+            <div class="stats" aria-label="站点统计">
+              <span><strong id="totalCount">0</strong>款</span>
+              <span><strong id="avgGrind">0</strong>刷度</span>
+              <span><strong id="platformCount">0</strong>平台</span>
+            </div>
+          </div>
+
+          <article class="featured-game" id="featuredGame" aria-live="polite"></article>
+
+          <div class="grid-toolbar">
+            <h2 id="resultTitle">全部游戏</h2>
+            <label class="select-label compact" for="sortSelect">
+              <span>排序</span>
+              <select id="sortSelect">
+                <option value="score">综合评分</option>
+                <option value="grind">刷度优先</option>
+                <option value="updated">最近更新</option>
+              </select>
+            </label>
+          </div>
+
+          <section class="game-grid" id="gameGrid" aria-label="游戏列表"></section>
+          <p class="empty-state" id="emptyState" hidden>没有匹配的游戏。</p>
+        </div>
+      </section>
+
+      <section class="ranking-band" id="ranking" aria-labelledby="rankingTitle">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="eyebrow">Weekly Rotation</p>
+            <h2 id="rankingTitle">本周刷点</h2>
+          </div>
+          <div class="ranking-list">
+            <article>
+              <span>01</span>
+              <h3>赛季开荒</h3>
+              <p>适合重新建号、冲词缀、验证新 Build 的长线循环。</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>材料搬砖</h3>
+              <p>推荐掉落明确、路线稳定、重复收益可预期的资源型游戏。</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>组队刷图</h3>
+              <p>偏向多人副本、职责分工和装备成型后的挑战内容。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="submit-section" id="submit" aria-labelledby="submitTitle">
+        <div class="section-inner submit-grid">
+          <div class="section-heading">
+            <p class="eyebrow">Community Picks</p>
+            <h2 id="submitTitle">投稿游戏</h2>
+            <p>本地投稿会保存在浏览器中，适合先整理候选清单，再提交到仓库维护。</p>
+          </div>
+          <form class="submit-form" id="submitForm">
+            <label>
+              游戏名称
+              <input name="title" required maxlength="32" placeholder="例如：矿洞远征">
+            </label>
+            <label>
+              核心循环
+              <input name="loop" required maxlength="80" placeholder="例如：挖矿、鉴定、升级装备">
+            </label>
+            <label>
+              类型
+              <select name="category">
+                <option value="arpg">ARPG</option>
+                <option value="shooter">射击</option>
+                <option value="survival">生存</option>
+                <option value="roguelite">肉鸽</option>
+                <option value="sim">经营</option>
+              </select>
+            </label>
+            <button class="primary-button" type="submit">添加到我的分享</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="game-dialog" id="gameDialog" aria-labelledby="dialogTitle">
+      <button class="icon-button dialog-close" id="closeDialog" type="button" aria-label="关闭详情">×</button>
+      <div id="dialogContent"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <footer class="site-footer">
+      <span>刷子游戏分享</span>
+      <span>非官方分享站，封面为原创风格化位图资产。</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
