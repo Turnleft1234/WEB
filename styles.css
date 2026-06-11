@@ -645,6 +645,8 @@ a.text-button {
 
 .game-dialog {
   width: min(760px, calc(100% - 28px));
+  max-height: calc(100vh - 40px);
+  overflow: auto;
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -699,6 +701,108 @@ a.text-button {
   margin: 0;
   padding-left: 20px;
   color: var(--muted);
+}
+
+.dialog-comments {
+  display: grid;
+  gap: 14px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.comments-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.comments-heading h3,
+.comment-item p,
+.comment-empty,
+.comment-hint {
+  margin: 0;
+}
+
+.comments-heading span,
+.comment-hint {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.comment-form {
+  display: grid;
+  gap: 12px;
+}
+
+.comment-field {
+  display: grid;
+  gap: 8px;
+}
+
+.comment-field textarea {
+  width: 100%;
+  min-height: 92px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+  color: var(--ink);
+  resize: vertical;
+}
+
+.comment-field textarea:focus {
+  outline: 2px solid rgba(15, 111, 117, 0.18);
+  border-color: var(--teal);
+}
+
+.comment-counter {
+  justify-self: end;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.comment-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comment-item {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.comment-item p {
+  color: var(--ink);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.comment-empty {
+  padding: 18px 14px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  text-align: center;
 }
 
 .toast {
