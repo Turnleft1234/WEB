@@ -17,6 +17,8 @@ WIDTH = 640
 HEIGHT = 400
 OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "covers")
 
+# new-king-awakening.png and reign-of-terror.png are sourced from资料站 pages.
+
 
 def clamp(value: float) -> int:
     return max(0, min(255, int(value)))

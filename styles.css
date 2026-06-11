@@ -396,6 +396,30 @@ select,
   background: var(--teal-dark);
 }
 
+a.primary-button,
+a.text-button {
+  text-decoration: none;
+}
+
+.primary-button.outline {
+  border-color: var(--teal);
+  background: var(--surface);
+  color: var(--teal-dark);
+}
+
+.primary-button.outline:hover {
+  border-color: var(--teal-dark);
+  background: #e4f3f2;
+}
+
+.action-row,
+.card-action-buttons,
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .compact {
   display: flex;
   align-items: center;
@@ -504,6 +528,9 @@ select,
 }
 
 .text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 38px;
   padding: 0 12px;
   border: 1px solid var(--line);
@@ -511,6 +538,7 @@ select,
   background: var(--surface);
   color: var(--teal-dark);
   font-weight: 800;
+  line-height: 1;
 }
 
 .text-button:hover {
