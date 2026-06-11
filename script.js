@@ -156,9 +156,9 @@ const categoryNames = {
   community: "投稿"
 };
 
-const COMMENTS_KEY = "grindShareComments";
+const COMMENTS_PATH = "data/comments.json";
+const COMMENTS_REPO = "Turnleft1234/WEB";
 const MAX_COMMENT_LENGTH = 100;
-const MAX_COMMENTS_PER_GAME = 50;
 
 const state = {
   genre: "all",
@@ -166,7 +166,8 @@ const state = {
   session: "all",
   query: "",
   sort: "score",
-  activeGameId: null
+  activeGameId: null,
+  commentsByGame: {}
 };
 
 const els = {
@@ -252,10 +253,16 @@ function renderExternalLink(game, className, label) {
 }
 
 function getAllComments() {
+  return state.commentsByGame;
+}
+
+async function loadComments() {
   try {
-    return JSON.parse(localStorage.getItem(COMMENTS_KEY) || "{}");
+    const response = await fetch(`${COMMENTS_PATH}?v=${Date.now()}`);
+    if (!response.ok) throw new Error("failed to load comments");
+    state.commentsByGame = await response.json();
   } catch {
-    return {};
+    state.commentsByGame = {};
   }
 }
 
@@ -263,10 +270,22 @@ function getGameComments(gameId) {
   return getAllComments()[gameId] || [];
 }
 
-function saveGameComments(gameId, comments) {
-  const all = getAllComments();
-  all[gameId] = comments;
-  localStorage.setItem(COMMENTS_KEY, JSON.stringify(all));
+function buildCommentIssueUrl(game, text) {
+  const body = [
+    "<!-- grind-share-comment -->",
+    `game_id: ${game.id}`,
+    "author: 访客",
+    `text: ${text}`,
+    "",
+    "_此留言由刷子游戏分享站提交，确认后将写入 data/comments.json 并对所有访客可见。_"
+  ].join("\n");
+
+  const params = new URLSearchParams({
+    title: `[留言] ${game.title}`,
+    body
+  });
+
+  return `https://github.com/${COMMENTS_REPO}/issues/new?${params.toString()}`;
 }
 
 function formatCommentTime(value) {
@@ -292,7 +311,7 @@ function renderCommentList(comments) {
           (comment) => `
         <li class="comment-item">
           <div class="comment-meta">
-            <span>访客</span>
+            <span>${escapeHtml(comment.author || "访客")}</span>
             <time datetime="${escapeHtml(comment.createdAt)}">${escapeHtml(formatCommentTime(comment.createdAt))}</time>
           </div>
           <p>${escapeHtml(comment.text)}</p>
@@ -319,17 +338,17 @@ function renderCommentsSection(gameId) {
             name="text"
             rows="3"
             maxlength="${MAX_COMMENT_LENGTH}"
-            placeholder="分享你的刷本心得，无需登录"
+            placeholder="分享你的刷本心得（最多 100 字）"
             required
           ></textarea>
           <span class="comment-counter"><span data-comment-count>0</span>/${MAX_COMMENT_LENGTH}</span>
         </label>
-        <button class="primary-button" type="submit">发表留言</button>
+        <button class="primary-button" type="submit">提交留言</button>
       </form>
       <div class="comment-results" aria-live="polite">
         ${renderCommentList(comments)}
       </div>
-      <p class="comment-hint">留言保存在本机浏览器中，仅当前设备可见。</p>
+      <p class="comment-hint">留言会写入仓库中的 data/comments.json，确认提交后对所有访客可见，通常 1-2 分钟内完成同步。</p>
     </section>
   `;
 }
@@ -424,11 +443,12 @@ function findGame(id) {
   return allGames().find((game) => game.id === id);
 }
 
-function openGame(id) {
+async function openGame(id) {
   const game = findGame(id);
   if (!game) return;
 
   state.activeGameId = id;
+  await loadComments();
 
   els.dialogContent.innerHTML = `
     <div class="dialog-hero">
@@ -508,7 +528,9 @@ els.search.addEventListener("input", () => {
 
 document.addEventListener("click", (event) => {
   const opener = event.target.closest("[data-open]");
-  if (opener) openGame(opener.dataset.open);
+  if (opener) {
+    void openGame(opener.dataset.open);
+  }
 });
 
 els.closeDialog.addEventListener("click", () => {
@@ -535,18 +557,15 @@ els.dialog.addEventListener("submit", (event) => {
 
   event.preventDefault();
   const gameId = form.dataset.commentForm;
-  const text = new FormData(form).get("text")?.toString().trim() || "";
-  if (!text || text.length > MAX_COMMENT_LENGTH) return;
+  const game = findGame(gameId);
+  const text = new FormData(form).get("text")?.toString().trim().replace(/\s+/g, " ") || "";
+  if (!game || !text || text.length > MAX_COMMENT_LENGTH) return;
 
-  const comments = getGameComments(gameId);
-  comments.unshift({
-    id: `comment-${Date.now()}`,
-    text,
-    createdAt: new Date().toISOString()
-  });
-  saveGameComments(gameId, comments.slice(0, MAX_COMMENTS_PER_GAME));
-  openGame(gameId);
-  showToast("留言已发表");
+  window.open(buildCommentIssueUrl(game, text), "_blank", "noopener,noreferrer");
+  form.reset();
+  const counter = form.querySelector("[data-comment-count]");
+  if (counter) counter.textContent = "0";
+  showToast("请在 GitHub 页面确认提交");
 });
 
 els.submitForm.addEventListener("submit", (event) => {
