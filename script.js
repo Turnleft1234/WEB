@@ -1,5 +1,43 @@
 const baseGames = [
   {
+    id: "new-king-awakening",
+    title: "新王觉醒",
+    subtitle: "暗黑2重制版大型微变 Mod",
+    category: "arpg",
+    image: "assets/covers/new-king-awakening.png",
+    platforms: ["PC"],
+    session: "长线",
+    team: "1-8",
+    grind: 95,
+    score: 9.4,
+    updated: "2026-03-22",
+    loop: "刷装备、研究配方、追传奇词条、打磨 Build",
+    tags: ["暗黑2", "Mod", "传奇词条"],
+    summary: "从「隔壁大王」官方资料站提取：大型微变 Mod，适配 3.0 客户端，以全新装备系统、配方公式和传奇词条驱动长期刷装。",
+    reasons: ["原页定位为长期更新中的大型微变 Mod", "装备系统、配方公式和传奇词条都指向清晰的掉落追求", "暗黑2重制版底层循环成熟，适合长线 Build 优化"],
+    tips: ["适合熟悉暗黑2重制版后再开荒", "优先记录核心配方和传奇词条来源"],
+    url: "https://www.wolai.com/dnrCQwp7BWAznpGTGesbp8"
+  },
+  {
+    id: "reign-of-terror-cw",
+    title: "RoT 畅玩",
+    subtitle: "恐怖黎明暗黑2复刻 Mod",
+    category: "arpg",
+    image: "assets/covers/reign-of-terror.png",
+    platforms: ["PC"],
+    session: "长线",
+    team: "1-4",
+    grind: 93,
+    score: 9.3,
+    updated: "2026-06-02",
+    loop: "开荒推进、设置专精掉落、刷 Boss、重构词缀 Build",
+    tags: ["恐怖黎明", "D2复刻", "专精掉落"],
+    summary: "基于 RoT 畅玩非官方资料站提取：在恐怖黎明机制下游玩暗黑2复刻 Mod，包含职业、技能、地图、剧情、装备和符文，并通过畅玩改动缩短成型周期。",
+    reasons: ["RoT 本体高仿复刻暗黑2，畅玩版在此基础上降低肝度并提升趣味性", "指定掉落和专精独立装备池让刷装目标更明确", "新词缀体系、世界 Boss、隐藏 Boss 和高档位内容支撑长线 Build 追求"],
+    tips: ["先读入坑指南，再按最新整合包安装", "用指定掉落和魔晶兑换系统缩短开荒到成型的距离"],
+    url: "https://RoT.GrimDawn.cn"
+  },
+  {
     id: "rune-abyss",
     title: "符文深渊",
     subtitle: "赛季制刷装 ARPG",
@@ -203,6 +241,11 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function renderExternalLink(game, className, label) {
+  if (!game.url) return "";
+  return `<a class="${className}" href="${escapeHtml(game.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+}
+
 function renderStats(games) {
   const total = games.length;
   const avg = total ? Math.round(games.reduce((sum, game) => sum + game.grind, 0) / total) : 0;
@@ -232,7 +275,10 @@ function renderFeatured(games) {
         <span class="tag hot">刷度 ${game.grind}</span>
         ${game.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
       </div>
-      <button class="primary-button" type="button" data-open="${game.id}">查看详情</button>
+      <div class="action-row">
+        <button class="primary-button" type="button" data-open="${game.id}">查看详情</button>
+        ${renderExternalLink(game, "primary-button outline", "前往资料站")}
+      </div>
     </div>
   `;
 }
@@ -264,7 +310,10 @@ function renderCards(games) {
               <div class="tag-row">
                 ${game.tags.slice(0, 2).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
               </div>
-              <button class="text-button" type="button" data-open="${game.id}">详情</button>
+              <div class="card-action-buttons">
+                <button class="text-button" type="button" data-open="${game.id}">详情</button>
+                ${renderExternalLink(game, "text-button", "前往")}
+              </div>
             </div>
           </div>
         </div>
@@ -309,6 +358,7 @@ function openGame(id) {
         ${game.platforms.map((platform) => `<span class="tag">${escapeHtml(platform)}</span>`).join("")}
       </div>
       <p>${escapeHtml(game.summary)}</p>
+      ${game.url ? `<div class="dialog-actions">${renderExternalLink(game, "primary-button", "前往游戏资料站 ↗")}</div>` : ""}
       <div class="dialog-columns">
         <section>
           <h3>推荐理由</h3>
