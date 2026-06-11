@@ -17,6 +17,8 @@ WIDTH = 640
 HEIGHT = 400
 OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "covers")
 
+# new-king-awakening.png and reign-of-terror.png are sourced from资料站 pages.
+
 
 def clamp(value: float) -> int:
     return max(0, min(255, int(value)))
@@ -138,65 +140,6 @@ def loot_forge() -> list[list[list[int]]]:
     for i in range(16):
         circle(c, 92 + i * 18, 334 + (i % 3) * 7, 9, (236, 186, 69, 220))
     sparkles(c, 11, (255, 219, 126))
-    return c
-
-
-def new_king_awakening() -> list[list[list[int]]]:
-    c = make_canvas((42, 32, 48), (12, 17, 27), (232, 73, 54))
-    glow_circle(c, 430, 106, 160, (242, 178, 74))
-    glow_circle(c, 226, 190, 120, (84, 184, 202))
-    polygon(c, [(0, 286), (148, 240), (304, 270), (452, 226), (640, 278), (640, 400), (0, 400)], (16, 19, 29, 246))
-    polygon(c, [(268, 72), (332, 106), (396, 72), (378, 168), (286, 168)], (225, 170, 70, 238))
-    circle(c, 332, 102, 13, (255, 236, 150, 190))
-    circle(c, 278, 77, 10, (255, 236, 150, 160))
-    circle(c, 386, 77, 10, (255, 236, 150, 160))
-    rect(c, 316, 118, 32, 178, (198, 210, 214, 245))
-    polygon(c, [(332, 72), (356, 122), (308, 122)], (239, 246, 240, 245))
-    polygon(c, [(286, 292), (378, 292), (420, 340), (244, 340)], (72, 49, 58, 245))
-    line(c, 244, 236, 156, 308, 5, (225, 78, 62, 205))
-    line(c, 420, 236, 520, 306, 5, (83, 190, 202, 205))
-    for x, y, col in [
-        (116, 302, (232, 76, 62)),
-        (178, 332, (242, 178, 74)),
-        (466, 318, (83, 190, 202)),
-        (532, 338, (232, 76, 62)),
-    ]:
-        polygon(c, [(x, y - 24), (x + 22, y), (x, y + 24), (x - 22, y)], (*col, 220))
-        circle(c, x, y, 8, (255, 255, 255, 90))
-    for x in range(98, 562, 58):
-        line(c, x, 256, x + 20, 232, 2, (242, 178, 74, 110))
-        line(c, x + 20, 232, x + 38, 258, 2, (242, 178, 74, 110))
-    sparkles(c, 88, (255, 220, 132))
-    return c
-
-
-def reign_of_terror() -> list[list[list[int]]]:
-    c = make_canvas((30, 46, 54), (13, 18, 25), (205, 54, 64))
-    glow_circle(c, 204, 142, 132, (72, 190, 188))
-    glow_circle(c, 456, 126, 150, (224, 81, 62))
-    polygon(c, [(0, 300), (136, 244), (274, 286), (420, 240), (640, 304), (640, 400), (0, 400)], (12, 18, 26, 246))
-    for x in range(90, 580, 76):
-        line(c, x, 258, x + 28, 230, 2, (235, 182, 81, 120))
-        line(c, x + 28, 230, x + 58, 260, 2, (235, 182, 81, 120))
-    circle(c, 328, 184, 90, (12, 18, 26, 230))
-    circle(c, 328, 184, 66, (47, 126, 130, 105))
-    circle(c, 328, 184, 42, (226, 70, 70, 95))
-    for r in range(82, 28, -12):
-        circle(c, 328, 184, r, (255, 225, 140, 24))
-    polygon(c, [(304, 72), (352, 72), (378, 126), (328, 154), (278, 126)], (220, 173, 74, 225))
-    rect(c, 318, 150, 20, 112, (213, 222, 212, 240))
-    polygon(c, [(286, 262), (370, 262), (414, 326), (242, 326)], (60, 43, 53, 242))
-    for x, y, col in [
-        (150, 316, (72, 190, 188)),
-        (218, 344, (235, 182, 81)),
-        (438, 332, (226, 70, 70)),
-        (506, 314, (112, 104, 206)),
-    ]:
-        rect(c, x - 24, y - 20, 48, 40, (*col, 210))
-        line(c, x - 12, y - 2, x + 12, y - 2, 2, (255, 255, 255, 95))
-    line(c, 174, 232, 110, 276, 4, (72, 190, 188, 165))
-    line(c, 480, 226, 552, 278, 4, (226, 70, 70, 165))
-    sparkles(c, 99, (255, 220, 132))
     return c
 
 
@@ -331,8 +274,6 @@ def write_png(path: str, canvas: list[list[list[int]]]) -> None:
 def main() -> None:
     os.makedirs(OUT_DIR, exist_ok=True)
     covers = {
-        "new-king-awakening.png": new_king_awakening(),
-        "reign-of-terror.png": reign_of_terror(),
         "loot-forge.png": loot_forge(),
         "starfall-raid.png": starfall_raid(),
         "rootcraft.png": rootcraft(),
