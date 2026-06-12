@@ -17,7 +17,7 @@ WIDTH = 640
 HEIGHT = 400
 OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "covers")
 
-# new-king-awakening.png, reign-of-terror.png, and another-survivor.png are sourced from资料站 pages.
+# new-king-awakening.png, reign-of-terror.png, another-survivor.png, starcraft-2-offline.png, and they-are-billions.png are sourced from资料站 pages.
 
 
 def clamp(value: float) -> int:

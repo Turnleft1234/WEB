@@ -55,6 +55,44 @@ const baseGames = [
     reasons: ["单局节奏固定，适合碎片时间反复开刷", "乘法与羁绊加成让 Build 差异明显", "TapTap 评分 8.1，关注人数超过 39 万"],
     tips: ["前期可以稍微贪一点，更容易撑到通关", "优先找乘法类加成，其次才是单纯加法", "羁绊提供的加成通常比单件装备更关键"],
     url: "https://www.taptap.cn/app/243749"
+  },
+  {
+    id: "starcraft-2-offline",
+    title: "星际争霸2",
+    subtitle: "完美离线单机珍藏版",
+    category: "rts",
+    image: "assets/covers/starcraft-2-offline.png",
+    platforms: ["PC"],
+    session: "长线",
+    team: "1",
+    grind: 86,
+    score: 9.0,
+    updated: "2026-02-14",
+    loop: "三部曲战役推进、遭遇战练习、诺娃与自定义地图挑战",
+    tags: ["即时战略", "离线单机", "三部曲"],
+    summary: "来自 3DM 论坛分享：整合自由之翼、虫群之心、虚空之遗与诺娃战役地图，提供多版本离线单机包、通关存档与修改器，无需战网即可反复推进战役与地图内容。",
+    reasons: ["三部曲剧情完整，适合长线推进与重复挑战成就", "提供简体/繁体/星际管家多版本，可按需求选择诺娃或地图 MOD", "2026 年持续更新，附带常见问题与 idx 修复说明"],
+    tips: ["二次启动报下载错误时，先清理 SC2Data/data 下 idx 再解压备份", "大小核处理器若提示离线不可用，可临时关闭小核后重启", "想玩诺娃或地图 MOD 优先选星际管家版本"],
+    url: "https://bbs.3dmgame.com/thread-6641629-1-1.html"
+  },
+  {
+    id: "they-are-billions",
+    title: "亿万僵尸",
+    subtitle: "They Are Billions v1.0.14",
+    category: "survival",
+    image: "assets/covers/they-are-billions.png",
+    platforms: ["PC"],
+    session: "长线",
+    team: "1",
+    grind: 84,
+    score: 8.6,
+    updated: "2026-05-08",
+    loop: "建设聚居地、布防扩图、抵御亿万感染者浪潮",
+    tags: ["蒸汽朋克", "塔防生存", "全DLC"],
+    summary: "来自 3DM 论坛资源帖：蒸汽朋克风格策略生存游戏，在被浩劫摧残的星球上建设幸存者基地，对抗想撕碎所有生者的亿万感染者；整合官方中文、全 DLC、地图全开存档与原声乐。",
+    reasons: ["基地扩张与防线优化有清晰长线目标", "感染者浪潮带来持续高压，重复挑战价值高", "整合版开箱即玩，适合直接推进战役与生存图"],
+    tips: ["前期优先保证食物、能源与基础防御，再扩张版图", "地图全开存档适合先熟悉机制，再挑战更高难度", "留意帖子更新版本号与网盘说明后再下载"],
+    url: "https://bbs.3dmgame.com/thread-6618871-1-1.html"
   }
 ];
 
@@ -63,6 +101,7 @@ const categoryNames = {
   shooter: "射击",
   survival: "生存",
   roguelite: "肉鸽",
+  rts: "即时战略",
   sim: "经营",
   community: "投稿"
 };
