@@ -93,6 +93,44 @@ const baseGames = [
     reasons: ["基地扩张与防线优化有清晰长线目标", "感染者浪潮带来持续高压，重复挑战价值高", "整合版开箱即玩，适合直接推进战役与生存图"],
     tips: ["前期优先保证食物、能源与基础防御，再扩张版图", "地图全开存档适合先熟悉机制，再挑战更高难度", "留意帖子更新版本号与网盘说明后再下载"],
     url: "https://bbs.3dmgame.com/thread-6618871-1-1.html"
+  },
+  {
+    id: "age-of-mythology-retold",
+    title: "神话时代：重述版",
+    subtitle: "Age of Mythology: Retold 豪华版",
+    category: "rts",
+    image: "assets/covers/age-of-mythology-retold.png",
+    platforms: ["PC"],
+    session: "长线",
+    team: "1-4",
+    grind: 82,
+    score: 8.8,
+    updated: "2026-06-10",
+    loop: "选择神系阵营、推进战役、消耗恩惠释放神力与科技",
+    tags: ["即时战略", "神话重制", "全DLC"],
+    summary: "来自 3DM 论坛资源帖：经典神话题材 RTS 重制版，整合黑曜石之镜 DLC 与季票，包含希腊、埃及、北欧、亚特兰蒂斯、中国、日本、阿兹特克等神系，v100.19.14612.0 免安装中文版。",
+    reasons: ["多神话阵营与战役内容适合长线反复体验", "恩惠值与冷却机制让神力博弈更有深度", "2026 年 6 月更新德墨忒尔重做与新地图，版本持续维护"],
+    tips: ["CPU 需支持 AVX 指令集，老旧处理器请先确认兼容性", "想体验阿兹特克与黑曜石之镜内容需确认整合包版本", "可先打教程与官方战役，再进神话之战练熟经济节奏"],
+    url: "https://bbs.3dmgame.com/thread-6669459-1-1.html"
+  },
+  {
+    id: "torchlight-2-imba",
+    title: "火炬之光2 IMBA",
+    subtitle: "暗黑传奇 · 符文觉醒 9.8",
+    category: "arpg",
+    image: "assets/covers/torchlight-2-imba.png",
+    platforms: ["PC"],
+    session: "长线",
+    team: "1-4",
+    grind: 92,
+    score: 9.1,
+    updated: "2019-05-16",
+    loop: "36 职业开荒、符文装备合成、第五幕与暗黑副本刷装",
+    tags: ["火炬之光2", "Mod", "符文装备"],
+    summary: "来自 3DM Mod 站：基于火炬之光 2 的超大型刷子 Mod，新增 36 职业、2000+ 装备与 200+ 地图，符文觉醒 9.8 重制顶级符文装、太古装与第五幕遗忘之地。",
+    reasons: ["装备层级从白装到太古/符文完整覆盖，掉落追求清晰", "第五幕、暗黑副本与大小秘境提供长线刷图目标", "职业数量与技能树扩展让 Build 实验空间很大"],
+    tips: ["安装前务必阅读 Mod 附带 CHM 说明文档", "升级 Mod 前备份存档，部分旧物品丢失属正常", "符文装备按等级区间合成，优先追求高阶词缀与套装组合"],
+    url: "https://mod.3dmgame.com/mod/43083"
   }
 ];
 
