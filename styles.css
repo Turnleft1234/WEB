@@ -97,6 +97,31 @@ a {
   margin-left: auto;
 }
 
+.header-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-stats span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 40px;
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.header-stats strong {
+  color: var(--ink);
+  font-size: 18px;
+}
+
 .top-nav a,
 .icon-button,
 .segmented button,
