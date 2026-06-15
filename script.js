@@ -10,6 +10,8 @@ const categoryNames = Object.fromEntries(categories.map((category) => [category.
 const COMMENTS_PATH = "data/comments.json";
 const COMMENTS_REPO = "Turnleft1234/WEB";
 const MAX_COMMENT_LENGTH = 100;
+const FEATURED_ROTATION_SIZE = 5;
+const FEATURED_ROTATION_INTERVAL = 5200;
 
 const state = {
   genre: "all",
@@ -17,7 +19,11 @@ const state = {
   session: "all",
   query: "",
   sort: "score",
-  commentsByGame: {}
+  commentsByGame: {},
+  featuredKey: "",
+  featuredGames: [],
+  featuredIndex: 0,
+  featuredTimer: null
 };
 
 const els = {
@@ -90,6 +96,7 @@ function initializeControls() {
   renderGenreFilters();
   renderPlatformFilters();
   renderSubmitCategories();
+  setupFeaturedCarousel();
 }
 
 function matchesQuery(game) {
@@ -243,32 +250,168 @@ function renderStats(games) {
   els.platformCount.textContent = platformCount;
 }
 
+function shuffle(list) {
+  const copied = [...list];
+  for (let i = copied.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copied[i], copied[j]] = [copied[j], copied[i]];
+  }
+  return copied;
+}
+
+function pickRandomGames(games, size) {
+  return shuffle(games).slice(0, Math.min(size, games.length));
+}
+
+function renderFeaturedCarousel(games) {
+  els.featured.innerHTML = `
+    <div class="featured-track" data-featured-track>
+      ${games
+        .map(
+          (game) => `
+        <article class="featured-slide">
+          <img src="${game.image}" alt="${escapeHtml(game.title)}的风格化封面" loading="eager">
+          <div class="featured-copy">
+            <div>
+              <p class="eyebrow">Featured Pick</p>
+              <h2>${escapeHtml(game.title)}</h2>
+            </div>
+            <p>${escapeHtml(game.summary)}</p>
+            <div class="tag-row">
+              <span class="tag hot">刷度 ${game.grind}</span>
+              ${game.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
+            </div>
+            <div class="action-row">
+              <button class="primary-button" type="button" data-open="${game.id}">查看详情</button>
+              ${renderExternalLink(game, "primary-button outline", "前往资料站")}
+            </div>
+          </div>
+        </article>
+      `
+        )
+        .join("")}
+    </div>
+    <div class="featured-dots" aria-label="精选轮播分页">
+      ${games
+        .map(
+          (game, index) => `
+        <button
+          class="featured-dot"
+          type="button"
+          aria-label="查看 ${escapeHtml(game.title)}"
+          aria-pressed="${index === state.featuredIndex ? "true" : "false"}"
+          data-featured-dot="${index}"
+        ></button>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function syncFeaturedCarousel() {
+  const track = els.featured.querySelector("[data-featured-track]");
+  const dots = els.featured.querySelectorAll("[data-featured-dot]");
+  if (!track) return;
+
+  track.style.transform = `translateX(-${state.featuredIndex * 100}%)`;
+  dots.forEach((dot, index) => {
+    dot.classList.toggle("active", index === state.featuredIndex);
+    dot.setAttribute("aria-pressed", index === state.featuredIndex ? "true" : "false");
+  });
+}
+
+function goToFeaturedSlide(index) {
+  if (!state.featuredGames.length) return;
+  const normalizedIndex = ((index % state.featuredGames.length) + state.featuredGames.length) % state.featuredGames.length;
+  state.featuredIndex = normalizedIndex;
+  syncFeaturedCarousel();
+  startFeaturedCarousel();
+}
+
+function buildFeaturedCarousel(games) {
+  els.featured.hidden = false;
+  renderFeaturedCarousel(games);
+  syncFeaturedCarousel();
+}
+
+function resetFeaturedState() {
+  state.featuredKey = "";
+  state.featuredGames = [];
+  state.featuredIndex = 0;
+}
+
+function refreshFeaturedSelection(games) {
+  state.featuredKey = games.map((game) => game.id).join("|");
+  state.featuredGames = pickRandomGames(games, FEATURED_ROTATION_SIZE);
+  state.featuredIndex = 0;
+  buildFeaturedCarousel(state.featuredGames);
+  startFeaturedCarousel();
+}
+
+function handleFeaturedDotsClick(event) {
+  const dot = event.target.closest("[data-featured-dot]");
+  if (!dot) return;
+  const index = Number(dot.dataset.featuredDot);
+  if (Number.isNaN(index)) return;
+  goToFeaturedSlide(index);
+}
+
+function bindFeaturedEvents() {
+  els.featured.addEventListener("click", handleFeaturedDotsClick);
+}
+
+function unbindFeaturedEvents() {
+  els.featured.removeEventListener("click", handleFeaturedDotsClick);
+}
+
+function stopFeaturedCarousel() {
+  if (state.featuredTimer) {
+    window.clearInterval(state.featuredTimer);
+    state.featuredTimer = null;
+  }
+}
+
+function advanceFeaturedCarousel() {
+  if (!state.featuredGames.length) return;
+  goToFeaturedSlide(state.featuredIndex + 1);
+}
+
+function startFeaturedCarousel() {
+  stopFeaturedCarousel();
+  if (state.featuredGames.length <= 1) return;
+  state.featuredTimer = window.setInterval(() => {
+    state.featuredIndex = (state.featuredIndex + 1) % state.featuredGames.length;
+    syncFeaturedCarousel();
+  }, FEATURED_ROTATION_INTERVAL);
+}
+
 function renderFeatured(games) {
-  const game = games[0];
-  if (!game) {
+  if (!games.length) {
+    stopFeaturedCarousel();
+    resetFeaturedState();
     els.featured.hidden = true;
     return;
   }
 
+  const key = games.map((game) => game.id).join("|");
+  if (key !== state.featuredKey || !state.featuredGames.length) {
+    refreshFeaturedSelection(games);
+    return;
+  }
+
   els.featured.hidden = false;
-  els.featured.innerHTML = `
-    <img src="${game.image}" alt="${escapeHtml(game.title)}的风格化封面" loading="eager">
-    <div class="featured-copy">
-      <div>
-        <p class="eyebrow">Featured Pick</p>
-        <h2>${escapeHtml(game.title)}</h2>
-      </div>
-      <p>${escapeHtml(game.summary)}</p>
-      <div class="tag-row">
-        <span class="tag hot">刷度 ${game.grind}</span>
-        ${game.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
-      </div>
-      <div class="action-row">
-        <button class="primary-button" type="button" data-open="${game.id}">查看详情</button>
-        ${renderExternalLink(game, "primary-button outline", "前往资料站")}
-      </div>
-    </div>
-  `;
+  syncFeaturedCarousel();
+}
+
+function teardownFeaturedCarousel() {
+  stopFeaturedCarousel();
+  unbindFeaturedEvents();
+}
+
+function setupFeaturedCarousel() {
+  teardownFeaturedCarousel();
+  bindFeaturedEvents();
 }
 
 function renderCards(games) {
