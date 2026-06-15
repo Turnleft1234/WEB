@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://turnleft1234.github.io/WEB/sitemap.xml

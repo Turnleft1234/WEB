@@ -49,24 +49,12 @@
 
           <div class="filter-group">
             <h2>类型</h2>
-            <div class="segmented" id="genreFilters" role="group" aria-label="按类型筛选">
-              <button class="active" type="button" data-genre="all">全部</button>
-              <button type="button" data-genre="arpg">ARPG</button>
-              <button type="button" data-genre="shooter">射击</button>
-              <button type="button" data-genre="survival">生存</button>
-              <button type="button" data-genre="roguelite">肉鸽</button>
-              <button type="button" data-genre="rts">即时战略</button>
-              <button type="button" data-genre="sim">经营</button>
-            </div>
+            <div class="segmented" id="genreFilters" role="group" aria-label="按类型筛选"></div>
           </div>
 
           <div class="filter-group">
             <h2>平台</h2>
-            <div class="check-list" id="platformFilters">
-              <label><input type="checkbox" value="PC" checked> PC</label>
-              <label><input type="checkbox" value="主机" checked> 主机</label>
-              <label><input type="checkbox" value="移动端" checked> 移动端</label>
-            </div>
+            <div class="check-list" id="platformFilters"></div>
           </div>
 
           <div class="filter-group">
@@ -156,13 +144,7 @@
             </label>
             <label>
               类型
-              <select name="category">
-                <option value="arpg">ARPG</option>
-                <option value="shooter">射击</option>
-                <option value="survival">生存</option>
-                <option value="roguelite">肉鸽</option>
-                <option value="sim">经营</option>
-              </select>
+              <select name="category"></select>
             </label>
             <button class="primary-button" type="submit">添加到我的分享</button>
           </form>
@@ -182,6 +164,7 @@
       <span>非官方分享站，封面为原创风格化位图资产。</span>
     </footer>
 
+    <script src="data/catalog.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
